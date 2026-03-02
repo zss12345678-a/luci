@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-02-01 18:46+0000\n"
+"PO-Revision-Date: 2026-02-15 08:22+0000\n"
 "Last-Translator: Hyeonjeong Lee <h9101654@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/openwrt/"
 "luciapplicationsdockerman/ko/>\n"
@@ -49,7 +49,7 @@ msgstr "추가"
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:297
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:602
 msgid "Add Mount"
-msgstr ""
+msgstr "마운트 추가"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:637
 msgid "Add host device to the container"
@@ -61,7 +61,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:616
 msgid "Advanced"
-msgstr ""
+msgstr "고급"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/events.js:342
 msgid "All Subtypes"
@@ -93,7 +93,7 @@ msgstr "LuCI 도커 클라이언트가 연될된 도커 호스트의 개요가 �
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:33
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:168
 msgid "Api Version"
-msgstr "Api 버전"
+msgstr "API 버전"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network.js:70
 msgid "Attachable"
@@ -135,7 +135,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:59
 msgid "Bridge (Support direct communication between MAC VLANs)"
-msgstr ""
+msgstr "브리지 (MACVLAN 간 직접 통신 지원)"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:43
 msgid "Bridge device"
@@ -143,7 +143,7 @@ msgstr "브리지 장치"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:419
 msgid "Build"
-msgstr ""
+msgstr "빌드"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/images.js:206
 msgid "Build an image."
@@ -235,7 +235,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1181
 msgid "Clear"
-msgstr ""
+msgstr "삭제"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/images.js:617
 msgid "Click to add a new tag to this image"
@@ -258,19 +258,19 @@ msgstr "클라이언트 연결"
 msgid "Command"
 msgstr "명령어"
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1149
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1152
 msgid "Command cancelled"
-msgstr ""
+msgstr "명령 취소됨"
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1128
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1139
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1131
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1142
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:86
 msgid "Command failed"
-msgstr ""
+msgstr "명령 수행 실패"
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1116
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1119
 msgid "Command successful"
-msgstr ""
+msgstr "명령 수행 완료"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1012
 msgid "Command:"
@@ -278,7 +278,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network.js:80
 msgid "Config Only"
-msgstr ""
+msgstr "설정 전용"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network.js:76
 msgid "ConfigFrom"
@@ -310,7 +310,7 @@ msgstr ""
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1512
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1524
 msgid "Connected"
-msgstr ""
+msgstr "연결"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1055
 msgid "Connected to container console"
@@ -318,7 +318,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1397
 msgid "Connecting…"
-msgstr ""
+msgstr "연결 중…"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:998
 msgid "Console"
@@ -349,7 +349,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:160
 msgid "Container"
-msgstr ""
+msgstr "컨테이너"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:968
 msgid "Container Inspect"
@@ -365,9 +365,9 @@ msgstr "컨테이너 이름"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:818
 msgid "Container Statistics"
-msgstr ""
+msgstr "컨테이너 통계"
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:922
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:927
 msgid "Container created"
 msgstr ""
 
@@ -375,7 +375,7 @@ msgstr ""
 msgid "Container detail"
 msgstr ""
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:922
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:927
 msgid "Container duplicated"
 msgstr ""
 
@@ -383,7 +383,7 @@ msgstr ""
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:713
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:832
 msgid "Container is not running"
-msgstr ""
+msgstr "컨테이너가 실행 중이 아님"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1086
 msgid "Container is not running. Cannot connect to WebSocket console."
@@ -422,19 +422,19 @@ msgstr "컨테이너 개요"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:421
 msgid "Create"
-msgstr ""
+msgstr "생성"
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:916
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:921
 msgid "Create container"
-msgstr ""
+msgstr "컨테이너 생성"
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:937
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:942
 msgid "Create container failed"
 msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:234
 msgid "Create network"
-msgstr ""
+msgstr "네트워크 생성"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:249
 msgid "Create network failed"
@@ -462,7 +462,7 @@ msgstr "DNS"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:582
 msgid "DNS Names"
-msgstr ""
+msgstr "DNS 이름"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:73
 msgid "Debug"
@@ -521,7 +521,7 @@ msgstr ""
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1530
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1549
 msgid "Disconnected"
-msgstr ""
+msgstr "연결 해제"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/images.js:536
 msgid "Do you want to remove the tag \"%s\"?"
@@ -533,7 +533,7 @@ msgstr "Docker - 설정"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:330
 msgid "Docker - Container"
-msgstr ""
+msgstr "Docker - 컨테이너"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:189
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:49
@@ -555,7 +555,7 @@ msgstr "Docker - 네트워크"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:26
 msgid "Docker - New Network"
-msgstr ""
+msgstr "Docker - 새 네트워크"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:144
 msgid "Docker - Overview"
@@ -584,7 +584,7 @@ msgstr "DockerMan은 LuCI의 간단한 도커 관리 클라이언트입니다"
 
 #: applications/luci-app-dockerman/root/usr/share/luci/menu.d/luci-app-dockerman.json:3
 msgid "Dockerman JS"
-msgstr ""
+msgstr "Dockerman JS"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:945
 msgid "Download"
@@ -619,7 +619,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:297
 msgid "Edit Mount"
-msgstr ""
+msgstr "마운트 편집"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:195
 msgid "Edit this container"
@@ -643,21 +643,22 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:250
 msgid "Entry"
-msgstr ""
+msgstr "항목"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:494
 msgid "Env"
 msgstr "환경 변수"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:246
+#, fuzzy
 msgid "Environment"
-msgstr ""
+msgstr "환경 변수"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:282
 msgid "Environmental Variable(-e)"
 msgstr ""
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1026
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1029
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:76
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1490
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1491
@@ -703,11 +704,11 @@ msgstr ""
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:411
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/images.js:386
 msgid "Export"
-msgstr ""
+msgstr "내보내기"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:272
 msgid "Export this container"
-msgstr ""
+msgstr "컨테이너 내보내기"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:628
 msgid "Exposed All Ports(-P)"
@@ -748,7 +749,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:77
 msgid "Fatal"
-msgstr "심각 (Fatal)"
+msgstr "심각(Fatal)"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:916
 msgid "File"
@@ -802,7 +803,7 @@ msgstr "게이트웨이"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:574
 msgid "Global IPv6 Address"
-msgstr ""
+msgstr "전역 IPv6 주소"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:21
 msgid "Global settings"
@@ -810,7 +811,7 @@ msgstr "전역 설정"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:23
 msgid "Globals"
-msgstr ""
+msgstr "전역"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:262
 msgid "Go to relevant configuration page"
@@ -855,7 +856,7 @@ msgstr "IP VLAN"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:113
 msgid "IP range"
-msgstr ""
+msgstr "IP 범위"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network.js:98
 msgid "IPAM Driver"
@@ -869,13 +870,13 @@ msgstr "IPv4 주소"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network.js:64
 msgid "IPv6"
-msgstr ""
+msgstr "IPv6"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:572
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:259
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network.js:129
 msgid "IPv6 Address"
-msgstr ""
+msgstr "IPv6 주소"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:580
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:134
@@ -932,7 +933,7 @@ msgstr "가져오기"
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:212
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:222
 msgid "In Use:"
-msgstr ""
+msgstr "사용 중:"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1105
 msgid "Include logs"
@@ -997,7 +998,7 @@ msgstr "강제 종료"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:260
 msgid "Kill this container"
-msgstr ""
+msgstr "컨테이너 강제 종료"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:888
 msgid "Kind"
@@ -1013,7 +1014,7 @@ msgstr "L3 브리지"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:94
 msgid "LAN connection"
-msgstr ""
+msgstr "LAN 연결"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network.js:92
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:84
@@ -1077,7 +1078,7 @@ msgstr "로그"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:576
 msgid "MAC Address"
-msgstr ""
+msgstr "MAC 주소"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:44
 msgid "MAC VLAN"
@@ -1085,7 +1086,7 @@ msgstr "MAC VLAN"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network.js:122
 msgid "Mac Address"
-msgstr ""
+msgstr "MAC 주소"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:335
 msgid "Manage and view container configuration"
@@ -1189,7 +1190,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network.js:100
 msgid "Network Configurations"
-msgstr ""
+msgstr "네트워크 설정"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network.js:59
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:37
@@ -1202,7 +1203,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:242
 msgid "Network created"
-msgstr ""
+msgstr "네트워크 생성 완료"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:240
 msgid "Network created with warning"
@@ -1212,9 +1213,9 @@ msgstr ""
 msgid "Network disconnected"
 msgstr ""
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1140
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1143
 msgid "Network error"
-msgstr ""
+msgstr "네트워크 오류"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:551
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:242
@@ -1229,33 +1230,33 @@ msgstr "네트워크"
 msgid "Networks overview"
 msgstr "네트워크 개요"
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:924
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:929
 msgid "New container duplicated from"
 msgstr ""
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:925
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:930
 msgid "New container has been created."
 msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/images.js:622
 msgid "New tag"
-msgstr ""
+msgstr "새 태그"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/volumes.js:118
 msgid "New volume"
-msgstr ""
+msgstr "새 볼륨"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:478
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:671
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:237
 msgid "No"
-msgstr ""
+msgstr "아니요"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1869
 msgid "No additional networks available to connect"
 msgstr ""
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:874
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:877
 msgid "No changes needed"
 msgstr ""
 
@@ -1283,7 +1284,7 @@ msgstr ""
 msgid "No logs available"
 msgstr ""
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:909
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:914
 msgid "No name specified."
 msgstr ""
 
@@ -1322,12 +1323,12 @@ msgstr ""
 msgid "Number of CPUs. Number is a fractional number. 0.000 means no limit"
 msgstr ""
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:861
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:888
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:864
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:891
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1354
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:242
 msgid "OK"
-msgstr ""
+msgstr "확인"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:665
 msgid "OOM Kill Disable"
@@ -1350,7 +1351,7 @@ msgstr ""
 msgid "Only for user-defined networks"
 msgstr ""
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:896
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:899
 msgid "Operation failed"
 msgstr ""
 
@@ -1375,7 +1376,7 @@ msgstr "개요"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:839
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:729
 msgid "PID Stats"
@@ -1387,11 +1388,11 @@ msgstr "상위 인터페이스"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:62
 msgid "Pass-through (Mirror physical device to single MAC VLAN)"
-msgstr ""
+msgstr "패스스루 (물리 장치의 모든 트래픽을 단일 MACVLAN에 전달)"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:120
 msgid "Password"
-msgstr ""
+msgstr "암호"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:888
 msgid "Path"
@@ -1411,11 +1412,11 @@ msgstr ""
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:390
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1797
 msgid "Pause"
-msgstr ""
+msgstr "일시 정지"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:206
 msgid "Pause this container"
-msgstr ""
+msgstr "컨테이너 일시 정지"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:86
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:143
@@ -1455,22 +1456,23 @@ msgstr ""
 msgid "Please select an image tag to push"
 msgstr ""
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1026
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1029
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1613
 msgid "Please specify a path"
-msgstr ""
+msgstr "경로를 지정하세요"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1027
 msgid "Port:"
-msgstr ""
+msgstr "포트:"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:501
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:164
 msgid "Ports"
 msgstr "포트"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:60
 msgid "Private (Prevent communication between MAC VLANs)"
-msgstr ""
+msgstr "격리 (MACVLAN 간 통신 차단)"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:228
 msgid "Privileged"
@@ -1482,11 +1484,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:822
 msgid "Processes"
-msgstr ""
-
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1092
-msgid "Progress"
-msgstr ""
+msgstr "프로세스"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:319
 msgid "Propagation: private"
@@ -1542,7 +1540,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:317
 msgid "Read-only (ro)"
-msgstr ""
+msgstr "읽기 전용 (ro)"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:318
 msgid "Read-write (rw)"
@@ -1550,11 +1548,11 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:125
 msgid "Registry"
-msgstr ""
+msgstr "레지스트리"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:100
 msgid "Registry Auth"
-msgstr ""
+msgstr "레지스트리 인증"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:63
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:173
@@ -1601,7 +1599,7 @@ msgstr "재시작"
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:154
 msgctxt "daemon restart action"
 msgid "Restart"
-msgstr ""
+msgstr "재시작"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:476
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:234
@@ -1610,7 +1608,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:237
 msgid "Restart this container"
-msgstr ""
+msgstr "컨테이너 재시작"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:88
 msgid "Restrict external access to the network"
@@ -1627,11 +1625,11 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:825
 msgid "Running Processes"
-msgstr ""
+msgstr "실행 중인 프로세스"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:192
 msgid "Running:"
-msgstr ""
+msgstr "실행 중:"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:839
 msgid "STAT"
@@ -1639,7 +1637,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:427
 msgid "Save locally"
-msgstr ""
+msgstr "로컬 저장"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/events.js:249
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network.js:62
@@ -1662,7 +1660,7 @@ msgstr ""
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:343
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:456
 msgid "Select options..."
-msgstr ""
+msgstr "옵션 선택..."
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1142
 msgid "Send"
@@ -1704,11 +1702,12 @@ msgstr "시작"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:207
 msgid "Start this container"
-msgstr ""
+msgstr "컨테이너 시작"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:161
+#, fuzzy
 msgid "State"
-msgstr ""
+msgstr "상태"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:695
 msgid "Stats"
@@ -1741,11 +1740,11 @@ msgstr "중지"
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:155
 msgctxt "daemon stop action"
 msgid "Stop"
-msgstr ""
+msgstr "중지"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:248
 msgid "Stop this container"
-msgstr ""
+msgstr "컨테이너 중지"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:88
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:145
@@ -1775,9 +1774,9 @@ msgstr ""
 msgid "Success"
 msgstr ""
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1009
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:1012
 msgid "Successful"
-msgstr ""
+msgstr "수행 완료"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:536
 msgid "Sysctl Settings"
@@ -1875,7 +1874,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:138
 msgid "Token"
-msgstr ""
+msgstr "토큰"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/configuration.js:107
 msgid "Tokes and Passwords are not encrypted in the uci configuration."
@@ -1907,7 +1906,7 @@ msgstr ""
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/events.js:63
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/events.js:249
 msgid "Type"
-msgstr ""
+msgstr "유형"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1127
 msgid "Type command here... (Ctrl+D to detach)"
@@ -1917,7 +1916,7 @@ msgstr ""
 msgid "USER"
 msgstr ""
 
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:977
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:980
 msgid "Unexpected error"
 msgstr ""
 
@@ -1925,7 +1924,7 @@ msgstr ""
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1631
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1674
 msgid "Unknown error"
-msgstr ""
+msgstr "알 수 없는 오류"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:479
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:238
@@ -1935,11 +1934,11 @@ msgstr ""
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:390
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1798
 msgid "Unpause"
-msgstr ""
+msgstr "재개"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/containers.js:207
 msgid "Unpause this container"
-msgstr ""
+msgstr "컨테이너 재개"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:564
 msgid "Update"
@@ -1983,7 +1982,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/network_new.js:61
 msgid "VEPA (Virtual Ethernet Port Aggregator)"
-msgstr ""
+msgstr "VEPA (가상 이더넷 포트 통합)"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:839
 msgid "VSZ"
@@ -1997,7 +1996,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:240
 msgid "Version"
-msgstr ""
+msgstr "버전"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:356
 msgid "Volume (named)"
@@ -2005,7 +2004,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:383
 msgid "Volume Name"
-msgstr ""
+msgstr "볼륨 이름"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/overview.js:219
 #: applications/luci-app-dockerman/root/usr/share/luci/menu.d/luci-app-dockerman.json:276
@@ -2035,7 +2034,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:671
 msgid "Yes"
-msgstr ""
+msgstr "예"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:323
 msgid "attach"
@@ -2043,7 +2042,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:404
 msgid "builder"
-msgstr ""
+msgstr "빌더"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:324
 msgid "commit"
@@ -2059,15 +2058,15 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:372
 msgid "connect"
-msgstr ""
+msgstr "연결"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:406
 msgid "container"
-msgstr ""
+msgstr "컨테이너"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:325
 msgid "copy"
-msgstr ""
+msgstr "복사"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:326
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:357
@@ -2075,11 +2074,11 @@ msgstr ""
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:382
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:391
 msgid "create"
-msgstr ""
+msgstr "생성"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:407
 msgid "daemon"
-msgstr ""
+msgstr "데몬"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:358
 msgid "delete"
@@ -2101,7 +2100,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:373
 msgid "disconnect"
-msgstr ""
+msgstr "연결 해제"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:330
 msgid "exec_create"
@@ -2133,23 +2132,23 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:408
 msgid "image"
-msgstr ""
+msgstr "이미지"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:336
 msgid "kill"
-msgstr ""
+msgstr "강제 종료"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:360
 msgid "load"
-msgstr ""
+msgstr "불러오기"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:383
 msgid "mount"
-msgstr ""
+msgstr "마운트"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:409
 msgid "network"
-msgstr ""
+msgstr "네트워크"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:410
 msgid "node"
@@ -2161,7 +2160,7 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:338
 msgid "pause"
-msgstr ""
+msgstr "일시 정지"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:411
 msgid "plugin"
@@ -2173,7 +2172,7 @@ msgstr ""
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:377
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:386
 msgid "prune"
-msgstr ""
+msgstr "정리"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:861
 msgid "ps flags:"
@@ -2198,11 +2197,11 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:341
 msgid "restart"
-msgstr ""
+msgstr "재시작"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:363
 msgid "save"
-msgstr ""
+msgstr "저장"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:412
 msgid "secret"
@@ -2214,11 +2213,11 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:342
 msgid "start"
-msgstr ""
+msgstr "시작"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:343
 msgid "stop"
-msgstr ""
+msgstr "중지"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:364
 msgid "tag"
@@ -2234,11 +2233,11 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:384
 msgid "unmount"
-msgstr ""
+msgstr "마운트 해제"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:345
 msgid "unpause"
-msgstr ""
+msgstr "재개"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:365
 msgid "untag"
@@ -2252,16 +2251,19 @@ msgstr ""
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/dockerman/common.js:414
 msgid "volume"
-msgstr ""
+msgstr "볼륨"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/volumes.js:126
 msgid "volume name"
-msgstr ""
+msgstr "볼륨 이름"
 
 #: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container.js:1352
-#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:928
+#: applications/luci-app-dockerman/htdocs/luci-static/resources/view/dockerman/container_new.js:933
 msgid "with warnings"
 msgstr ""
+
+#~ msgid "Progress"
+#~ msgstr "진행 상태"
 
 #~ msgid "Advance"
 #~ msgstr "고급 설정"
