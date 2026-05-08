@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-30 17:00+0200\n"
-"PO-Revision-Date: 2025-09-29 21:02+0000\n"
+"PO-Revision-Date: 2026-04-18 17:10+0000\n"
 "Last-Translator: Franco Castillo <castillofrancodamian@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/openwrt/"
 "luciapplicationsfirewall/es/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14-dev\n"
+"X-Generator: Weblate 5.17.1-dev\n"
 
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/rules.js:48
 msgid ""
@@ -108,8 +108,8 @@ msgid ""
 "<var data-tooltip=\"MARK\">%{set_mark?Assign:XOR}</var> firewall mark <var>%"
 "{set_mark?:%{set_xmark}}</var>"
 msgstr ""
-"<var data-tooltip=\"MARK\">%{set_mark?Asignar:XOR}</var> marca de "
-"cortafuegos<var>%{set_mark?:%{set_xmark}}</var>"
+"<var data-tooltip=\"MARK\">%{set_mark?Assign:XOR}</var> marca de cortafuegos "
+"<var>%{set_mark?:%{set_xmark}}</var>"
 
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/snats.js:90
 msgid "<var data-tooltip=\"MASQUERADE\">Automatically rewrite</var> source IP"
@@ -196,7 +196,7 @@ msgstr "Ajustes avanzados"
 
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js:281
 msgid "Allow \"invalid\" traffic"
-msgstr "Permitir tráfico \"no válido\""
+msgstr "Permitir tráfico «no válido»"
 
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js:395
 msgid "Allow forward from <em>source zones</em>:"
@@ -467,6 +467,7 @@ msgid "Flow offloading type"
 msgstr "Tipo de descarga de flujo"
 
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js:62
+msgctxt "firewall forward"
 msgid "Forward"
 msgstr "Reenviar"
 
@@ -658,6 +659,7 @@ msgstr "Tamaño de hash inicial"
 
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js:60
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js:150
+msgctxt "firewall input"
 msgid "Input"
 msgstr "Entrada"
 
@@ -914,6 +916,7 @@ msgstr "Zona de salida"
 
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js:61
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js:151
+msgctxt "firewall output"
 msgid "Output"
 msgstr "Salida"
 
@@ -1170,13 +1173,13 @@ msgid ""
 "rule is <em>unidirectional</em>, e.g. a forward from lan to wan does "
 "<em>not</em> imply a permission to forward from wan to lan as well."
 msgstr ""
-"Estas opciones controlan las políticas de reenvío entre esta zona (%s) y "
-"otras. <em>Las zonas de origen</em> cubren el tráfico reenviado desde "
-"<strong>%q</strong>. <em>Las zonas de origen</em> coinciden con el tráfico "
-"reenviado desde otras zonas dirigido a <strong>%q</strong>. La regla de "
-"reenvío es <em>unidireccional</em>, por ejemplo una regla de reenvío desde "
-"la LAN a la WAN <em>no</em> implica permiso para reenviar desde la WAN a la "
-"LAN también."
+"Las opciones que se muestran a continuación controlan las políticas de "
+"reenvío entre esta zona (%s) y otras zonas. Las <em>Zonas de destino</em> "
+"cubren el tráfico reenviado que se origina en %q</strong>. Las <em>Zonas de "
+"origen</em> coinciden con el tráfico reenviado desde otras zonas "
+"<strong>dirigido a %q</strong>. La regla de reenvío es <em>unidireccionall</"
+"em>; p. ej., un reenvío de LAN a WAN <em>no</em> implica permiso para "
+"reenviar también de WAN a LAN."
 
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js:124
 msgid ""
@@ -1296,7 +1299,7 @@ msgstr ""
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/forwards.js:339
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/rules.js:455
 msgid "Unknown or not installed conntrack helper \"%s\""
-msgstr "Ayudante de Conntrack desconocido o no instalado \"%s\""
+msgstr "Ayudante de Conntrack desconocido o no instalado «%s»"
 
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/snats.js:185
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/snats.js:189
@@ -1327,9 +1330,9 @@ msgid ""
 "be converted to \"nat\" sections and the firewall will be restarted to apply "
 "the updated configuration."
 msgstr ""
-"Al presionar \"Continuar\", las secciones de \"redireccionamiento\" con "
-"\"SNAT\" de destino se convertirán en secciones \"nat\" y el cortafuegos se "
-"reiniciará para aplicar la configuración actualizada."
+"Al presionar «Continuar», las secciones de «redireccionamiento» con «SNAT» "
+"de destino se convertirán en secciones «nat» y el cortafuegos se reiniciará "
+"para aplicar la configuración actualizada."
 
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/forwards.js:313
 msgid "Use external IP address"
@@ -1584,7 +1587,7 @@ msgstr "set: ipset*"
 
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/ipsets.js:93
 msgid "src_Set: Source ipset*"
-msgstr "src_Set: IPset de origen*"
+msgstr "src_Set: ipset de origen*"
 
 #: applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/ipsets.js:88
 msgid "src_ip: Source IP"
@@ -1633,6 +1636,15 @@ msgstr "hasta 65536 entradas."
 #: applications/luci-app-firewall/htdocs/luci-static/resources/tools/firewall.js:338
 msgid "valid firewall mark"
 msgstr "marca de cortafuegos válida"
+
+#~ msgid "Forward"
+#~ msgstr "Reenviar"
+
+#~ msgid "Input"
+#~ msgstr "Entrada"
+
+#~ msgid "Output"
+#~ msgstr "Salida"
 
 #~ msgid "Invalid set name"
 #~ msgstr "Nombre del conjunto no válido"

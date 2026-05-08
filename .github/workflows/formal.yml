@@ -9,7 +9,7 @@ permissions:
 jobs:
   formalities:
     name: Test Formalities
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     strategy:
       fail-fast: false
 

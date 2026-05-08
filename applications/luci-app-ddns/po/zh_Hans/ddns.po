@@ -5,9 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: luci-app-ddns 2.4.0-1\n"
 "POT-Creation-Date: 2016-01-30 11:07+0100\n"
-"PO-Revision-Date: 2026-02-20 00:35+0000\n"
-"Last-Translator: 大王叫我来巡山 "
-"<hamburger2048@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-04-18 17:10+0000\n"
+"Last-Translator: DragonBluep <yangshiji66@outlook.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/openwrt/luciapplicationsddns/zh_Hans/>\n"
 "Language: zh_Hans\n"
@@ -15,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.16.1-dev\n"
+"X-Generator: Weblate 5.17.1-dev\n"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:423
 msgid "\"../\" not allowed in path for Security Reason."
@@ -40,11 +39,11 @@ msgstr "允许非公网 IP"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:606
 msgid "Basic Settings"
-msgstr "基础设置"
+msgstr "基本设置"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:903
 msgid "Bind Network"
-msgstr "使用的接口"
+msgstr "绑定接口"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:332
 msgid "Binding to a specific network not supported"
@@ -62,7 +61,7 @@ msgstr ""
 msgid ""
 "BusyBox's nslookup in the current compiled version does not handle given DNS "
 "Servers correctly!"
-msgstr "当前编译版本的 BusyBox 的 nslookup 不支持指定的 DNS 服务器！"
+msgstr "当前编译的 BusyBox nslookup 不支持自定义 DNS 服务器！"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:443
 msgid "CA cert bundle file"
@@ -206,7 +205,7 @@ msgstr "与 DDNS 提供商通信时使用安全连接"
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:612
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:1140
 msgid "Enabled"
-msgstr "启用"
+msgstr "已启用"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:966
 msgid "Error"
@@ -267,7 +266,7 @@ msgstr "格式"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:927
 msgid "Format: IP or FQDN"
-msgstr "格式： IP 或者 FQDN"
+msgstr "格式：IP 或者 FQDN"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:339
 msgid ""
@@ -507,23 +506,23 @@ msgstr "保存最近多少行日志到日志文件"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:916
 msgid "OPTIONAL: Force the usage of pure IPv4/IPv6 only communication."
-msgstr "可选： 强制仅使用 IPv4/IPv6 通信。"
+msgstr "可选：强制仅使用 IPv4/IPv6 通信。"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:937
 msgid "OPTIONAL: Force the use of TCP instead of default UDP on DNS requests."
-msgstr "可选： 强制使用 TCP 而非 UDP 请求 DNS。"
+msgstr "可选：强制使用 TCP 而非 UDP 请求 DNS。"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:904
 msgid "OPTIONAL: Network to use for communication"
-msgstr "可选： 用于通信的网络"
+msgstr "可选：用于通信的网络"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:946
 msgid "OPTIONAL: Proxy-Server for detection and updates."
-msgstr "可选： 用于检测以及更新的代理服务器。"
+msgstr "可选：用于检测以及更新的代理服务器。"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:925
 msgid "OPTIONAL: Use non-default DNS-Server to detect 'Registered IP'."
-msgstr "可选： 使用非默认 DNS 服务器检测\"已注册的 IP 地址\"。"
+msgstr "可选：使用非默认 DNS 服务器检测\"已注册的 IP 地址\"。"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:1041
 msgid ""
@@ -540,11 +539,11 @@ msgstr "可选参数"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:770
 msgid "Optional: Replaces [PARAMENC] in Update-URL (URL-encoded)"
-msgstr "可选： 替换更新 URL（已编码 URL）中的 [PARAMENC]"
+msgstr "可选：替换更新 URL（已编码 URL）中的 [PARAMENC]"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:776
 msgid "Optional: Replaces [PARAMOPT] in Update-URL (NOT URL-encoded)"
-msgstr "可选： 替换更新 URL（未编码 URL）中的 [PARAMOPT]"
+msgstr "可选：替换更新 URL（未编码 URL）中的 [PARAMOPT]"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:945
 msgid "PROXY-Server"
@@ -707,7 +706,7 @@ msgstr "默认设置“0”将无限重试。"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:1051
 msgid "The interval between which each subsequent retry commences."
-msgstr "发起连续重试之间相隔的时长。"
+msgstr "连续重试的发起间隔。"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:497
 msgid "The service name is already used"
@@ -791,7 +790,7 @@ msgstr "用户名"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:371
 msgid "Using specific DNS Server not supported"
-msgstr "不支持使用特定的 DNS 服务器"
+msgstr "不支持使用自定义 DNS 服务器"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:990
 msgid "Values below 5 minutes == 300 seconds are not supported"
@@ -886,7 +885,7 @@ msgstr "分钟"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:791
 msgid "or"
-msgstr "或者"
+msgstr "或"
 
 #: applications/luci-app-ddns/htdocs/luci-static/resources/view/ddns/overview.js:313
 msgid "or update your system to the latest OpenWrt Release"

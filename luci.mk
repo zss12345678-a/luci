@@ -38,8 +38,11 @@ LUCI_LANG.hi=हिंदी (Hindi)
 LUCI_LANG.hu=Magyar (Hungarian)
 LUCI_LANG.it=Italiano (Italian)
 LUCI_LANG.ja=日本語 (Japanese)
+LUCI_LANG.ka=ქართული ენა (Georgian)
 LUCI_LANG.ko=한국어 (Korean)
+LUCI_LANG.lo=ພາສາລາວ (Lao)
 LUCI_LANG.lt=Lietuvių (Lithuanian)
+LUCI_LANG.lv=Latviešu (Latvian)
 LUCI_LANG.mr=Marāṭhī (Marathi)
 LUCI_LANG.ms=Bahasa Melayu (Malay)
 LUCI_LANG.nb_NO=Norsk (Norwegian)
@@ -65,8 +68,9 @@ LUCI_MENU.col=1. Collections
 LUCI_MENU.mod=2. Modules
 LUCI_MENU.app=3. Applications
 LUCI_MENU.theme=4. Themes
-LUCI_MENU.proto=5. Protocols
-LUCI_MENU.lib=6. Libraries
+LUCI_MENU.plugin=5. Plugins
+LUCI_MENU.proto=6. Protocols
+LUCI_MENU.lib=7. Libraries
 
 # Language aliases
 LUCI_LC_ALIAS.bn_BD=bn

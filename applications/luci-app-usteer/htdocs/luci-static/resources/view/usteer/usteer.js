@@ -2,6 +2,7 @@
 'require view';
 'require rpc';
 'require poll';
+'require fs';
 'require dom';
 'require ui';
 'require form';
@@ -9,9 +10,10 @@
 'require network';
 'require tools.widgets as widgets';
 
-let Hosts, Remotehosts, Remoteinfo, Localinfo, Clients, WifiNetworks;
+let Hosts, Remotehosts, Remoteinfo, Localinfo, Clients, WifiNetworks, Initscript;
 
 const dns_cache = [];
+const hostapdClientData = [];
 
 function SplitWlan(wlan) {
 	let wlansplit = [];
@@ -115,7 +117,56 @@ function collectWlanAPInfoEntries(connectioninfo_table_entries, wlanAPInfos) {
 	}
 };
 
-function tootltip(mac, IP, hostname) {
+
+const RSN_CIPHER_MAP = {
+    "00-0f-ac-0": _("Use group cipher"),
+    "00-0f-ac-1": "WEP-40",
+    "00-0f-ac-2": "TKIP",
+    "00-0f-ac-3": _("Reserved"),
+    "00-0f-ac-4": "AES-CCMP-128",
+    "00-0f-ac-5": "WEP-104",
+    "00-0f-ac-6": "BIP-CMAC-128",
+    "00-0f-ac-7": _("Group addressed traffic not allowed"),
+    "00-0f-ac-8": "AES-GCMP-128",
+    "00-0f-ac-9": "AES-GCMP-256",
+    "00-0f-ac-10": "AES-CCMP-256",
+    "00-0f-ac-11": "BIP-GMAC-128",
+    "00-0f-ac-12": "BIP-GMAC-256",
+    "00-0f-ac-13": "BIP-CMAC-256",
+};
+
+const RSN_AKM_MAP = {
+    "00-0f-ac-1": "802.1X",
+    "00-0f-ac-2": "PSK",
+    "00-0f-ac-3": "FT 802.1X",
+    "00-0f-ac-4": "FT PSK",
+    "00-0f-ac-5": "WPA2 Enterprise SHA-256",
+    "00-0f-ac-6": "WPA2 PSK SHA-256",
+    "00-0f-ac-7": "TDLS",
+    "00-0f-ac-8": "SAE",
+    "00-0f-ac-9": "FT SAE",
+    "00-0f-ac-10": _("AP PeerKey"),
+    "00-0f-ac-11": "Suite B 192-bit",
+    "00-0f-ac-12": "Suite B 192-bit FT",
+    "00-0f-ac-13": "FILS SHA-256",
+    "00-0f-ac-14": "FILS SHA-384",
+    "00-0f-ac-15": "FILS FT SHA-256",
+    "00-0f-ac-16": "FILS FT SHA-384",
+    "00-0f-ac-17": "OWE",
+    "00-0f-ac-18": "FT OWE",
+};
+
+function translateCipher(value) {
+	if (!value) return ""; 
+	return RSN_CIPHER_MAP[value] ?? _("Unrecognized cipher code")+": "+value;
+}
+
+function translateAkm(value) { 
+	if (!value) return _("Install hostapd_cli for AKM and cipher info"); 
+	return RSN_AKM_MAP[value] ?? _("Unknown AKM")+": "+value;
+}
+
+function tooltip(mac, IP, hostname, wlan) {
 	const body= E([]);
 	body.appendChild(E('div', '%h'.format(mac)));
 	if (typeof IP !== 'undefined') {
@@ -125,12 +176,19 @@ function tootltip(mac, IP, hostname) {
 	if (hostname !== '') {
 		body.appendChild(E('div', '%h'.format(hostname)));
 	}
+	if (wlan==_('This AP')) {
+		body.appendChild(E('div', 
+		           '%h '.format(translateAkm(hostapdClientData[mac.toUpperCase()]?.AKMSuiteSelector))+
+				   '%h'.format(translateCipher(hostapdClientData[mac.toUpperCase()]?.dot11RSNAStatsSelectedPairwiseCipher))
+		));
+	}
 	return body;
 }
 
 function collectWlanAPInfos(compactconnectioninfo_table_entries, wlanAPInfos) {
 	for (let wlan in wlanAPInfos) {
 		const hostl = E([]);
+		const wlansplit=SplitWlan(wlan);
 		for (let mac in Clients) {
 			if (typeof Clients[mac] !== 'undefined')
 				if (typeof Clients[mac][wlan] !== 'undefined')
@@ -152,12 +210,11 @@ function collectWlanAPInfos(compactconnectioninfo_table_entries, wlanAPInfos) {
 						hostl.appendChild(
 							E('span', { 'class': 'cbi-tooltip-container' }, [
 								'%h\u2003'.format(foundname),
-								E('div', { 'class': 'cbi-tooltip' }, tootltip(mac, Hosts[macUp], hostname))
+								E('div', { 'class': 'cbi-tooltip' }, tooltip(mac, Hosts[macUp], hostname, wlansplit[0]))
 							])
 						);
 					}
 		}
-		const wlansplit=SplitWlan(wlan);
 		compactconnectioninfo_table_entries.push([
 			'<nobr>' + '%h'.format(wlansplit[0]) + '</nobr>',
 			'<nobr>' + '%h'.format(wlansplit[1]) + '</nobr>',
@@ -291,6 +348,35 @@ const Settingsfooter = form.DummyValue.extend({
 	}
 });
 
+function parseAllSta(text) {
+    const lines = text.split('\n');
+    let currentMac = null;
+
+    for (const raw of lines) {
+        const line = raw.trim();
+        // Detect MAC address line
+        if (/^[0-9a-f]{2}(:[0-9a-f]{2}){5}$/i.test(line)) {
+            currentMac = line.toUpperCase();
+            hostapdClientData[currentMac] = {};
+            continue;
+        }
+        if (currentMac && line.includes('=')) {
+            const [key, value] = line.split('=');
+            hostapdClientData[currentMac][key] = value;
+        }
+    }
+}
+
+function getCipherAKM() {
+	for (const wlan in Localinfo) {		
+		fs.stat('/usr/sbin/hostapd_cli').then(stat => {
+			if (!stat || stat.type !== 'file') { return; }
+			fs.exec_direct('/usr/sbin/hostapd_cli', ['-i', wlan.split('.')[1], 'all_sta'])
+				.then(res => { parseAllSta(res); })
+				.catch(err => {});
+		}).catch (function (){return null;});
+	}
+}
 
 return view.extend({
 	callHostHints: rpc.declare({
@@ -326,11 +412,20 @@ return view.extend({
 			this.callGetRemoteinfo().catch (function (){return null;}),
 			this.callGetLocalinfo().catch (function (){return null;}),
 			this.callGetClients().catch (function (){return null;}),
-			network.getWifiNetworks().catch (function (){return null;})
+			network.getWifiNetworks().catch (function (){return null;}),
+			fs.read('/etc/init.d/usteer').catch (function (){return null;})			
 		]);
 	},
 
-	poll_status(nodes, [Hosts, Remotehosts, Remoteinfo, Localinfo, Clients]) {
+	poll_status(nodes, data) {
+		
+		Hosts = data[1];
+		Remotehosts = data[2];
+		Remoteinfo = data[3];
+		Localinfo = data[4];
+		Clients = data[5];
+
+		getCipherAKM();	 
 
 		const remotehosttableentries = [];
 		collectRemoteHosts(remotehosttableentries,Remotehosts);
@@ -376,7 +471,10 @@ return view.extend({
 		Localinfo = data[4];
 		Clients = data[5];
 		WifiNetworks = data[6];
+		Initscript = data[7];
 
+		getCipherAKM();
+		
 		s = m.section(form.TypedSection);
 		s.anonymous = true;
 		s.tab('status', _('Status'));
@@ -578,7 +676,7 @@ return view.extend({
 
 		o = s.taboption('settings', form.Value, 'band_steering_interval', _('Band steering interval'), _('Attempting to steer clients to a higher frequency-band every n ms. A value of 0 disables band-steering.'));
 		o.optional = true;
-		o.placeholder = 120000;
+		o.placeholder = (Initscript.includes('aggressiveness')) ? 30000: 120000;
 		o.datatype = 'uinteger';
 
 		o = s.taboption('settings', form.Value, 'band_steering_min_snr', _('Band steering min SNR'), _('Minimal SNR or absolute signal a device has to maintain over band_steering_interval to be steered to a higher frequency band.'));
@@ -624,6 +722,48 @@ return view.extend({
 		o.optional = true;
 		o.datatype = 'list(string)';
 
+		if (Initscript.includes('aggressiveness')) {
+			o = s.taboption('settings', form.ListValue, 'aggressiveness', _('Aggressiveness'), 
+				_('Aggressiveness of BSS-transition-request to push a station to another node (AP or band).')
+			);
+			o.value('0', _('0 No active transition'));
+			o.value('1', _('1 Passive BSS-transition-request'));
+			o.value('2', _('2 BSS-transition-request with disassociation imminent'));
+			o.value('3', _('3 BSS-transition-request with disassociation imminent and timer'));
+			o.value('4', _('4 BSS-transition-request with disassociation imminent, timer and forced disassociation'));
+			o.optional = true;
+			o.datatype = 'uinteger';
+		}
+		
+		if (Initscript.includes('aggressiveness_mac_list')) {
+			o = s.taboption('settings', form.DynamicList, 'aggressiveness_mac_list', _('Aggressiveness mac list'), 
+				_('List of MACs (lower case) to set aggressiveness per station, e.g. ff:ff:ff:ff:ff:ff,2')+' '+
+				_('See option above for a list of numberical values')
+			);
+			o.optional = true;
+			o.datatype = 'list(string)';
+		}
+
+		if (Initscript.includes('reassociation_delay')) {
+			o = s.taboption('settings', form.Value, 'reassociation_delay', _('Reassociation delay'), 
+				_('Timeout (s in "1024ms") a station is requested to avoid reassociation after bss transition')
+			);
+			o.optional = true;
+			o.placeholder = 30;
+			o.datatype = 'uinteger';
+		}
+
+		if (Initscript.includes('band_steering_signal_threshold')) {
+			o = s.taboption('settings', form.Value, 'band_steering_signal_threshold ', _('Band steering signal threshold'), 
+				_('SNR difference that the signal must be better compared to signal was on connection to node.')+' '+
+				_('Avoids conflicts between roaming and band-steering policies.')+' '+
+				_('A value of 0 disables threshold.')
+			);
+			o.optional = true;
+			o.placeholder = 0;
+			o.datatype = 'uinteger';		
+		}
+
 		footerdata = this.super('addFooter', []);
 		o = s.taboption('settings', Settingsfooter);
 		o.readonly = true;
@@ -642,9 +782,15 @@ return view.extend({
 			return nodes;
 		}, this, m));
 	},
-
-
-	addFooter() {
+	handleReset(ev) {
+		footerdata = this.super('addFooter', []);
+		return this.super('handleReset',ev);
+	},	
+	handleSave(ev) {
+		footerdata = this.super('addFooter', []);
+		return this.super('handleSave',ev);
+	},
+	addFooter() { 
 		return null;
 	},
 });

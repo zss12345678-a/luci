@@ -133,49 +133,6 @@ methods.get_settings = {
 	}
 };
 
-methods.set_settings = {
-	args: { form_data: {} },
-	call: function(request) {
-		const form_data = request.args.form_data;
-		if (form_data == null || length(form_data) == 0) {
-			return { error: 'Missing or invalid form_data parameter. Please provide settings data.' };
-		}
-		let args = ['set'];
-
-		push(args,'--accept-routes=' + (form_data.accept_routes == '1'));
-		push(args,'--advertise-exit-node=' + ((form_data.advertise_exit_node == '1')&&(form_data.exit_node == "")));
-		if (form_data.exit_node == "") push(args,'--exit-node-allow-lan-access=' + (form_data.exit_node_allow_lan_access == '1'));
-		push(args,'--ssh=' + (form_data.ssh == '1'));
-		push(args,'--accept-dns=' + (form_data.disable_magic_dns != '1'));
-		push(args,'--shields-up=' + (form_data.shields_up == '1'));
-		push(args,'--webclient=' + (form_data.runwebclient == '1'));
-		push(args,'--snat-subnet-routes=' + (form_data.nosnat != '1'));
-		push(args,'--advertise-routes ' + (shell_quote(join(',',form_data.advertise_routes)) || '\"\"'));
-		push(args,'--exit-node=' + (shell_quote(form_data.exit_node) || '\"\"'));
-		if (form_data.exit_node != "") push(args,' --exit-node-allow-lan-access=true');
-		push(args,'--hostname ' + (shell_quote(form_data.hostname) || '\"\"'));
-
-		let cmd_array = 'tailscale '+join(' ', args);
-		let set_result = exec(cmd_array);
-		if (set_result.code != 0) {
-			return { error: 'Failed to apply node settings: ' + set_result.stderr };
-		}
-
-		uci.load('tailscale');
-		for (let key in form_data) {
-			uci.set('tailscale', 'settings', key, form_data[key]);
-		}
-		uci.save('tailscale');
-		uci.commit('tailscale');
-
-		// process reduce memory https://github.com/GuNanOvO/openwrt-tailscale
-		// some new versions of Tailscale may not work well with this method
-		//if (form_data.daemon_mtu != "" || form_data.daemon_reduce_memory != "") {
-		//	popen('/bin/sh -c ". ' + env_script_path + ' && /etc/init.d/tailscale restart" &');
-		//}
-		return { success: true };
-	}
-};
 
 methods.do_login = {
 	args: { form_data: {} },
@@ -361,6 +318,32 @@ methods.setup_firewall = {
 				let fid = uci.add('firewall', 'forwarding');
 				uci.set('firewall', fid, 'src', 'tailscale');
 				uci.set('firewall', fid, 'dest', 'lan');
+				changed_firewall = true;
+			}
+
+			// Exit node requires WAN <-> tailscale forwarding
+			let fwd_wan_to_ts = false;
+			let fwd_ts_to_wan = false;
+
+			for (let sec_key in fw_all) {
+				let s = fw_all[sec_key];
+				if (s['.type'] == 'forwarding') {
+					if (s.src == 'wan' && s.dest == 'tailscale') fwd_wan_to_ts = true;
+					if (s.src == 'tailscale' && s.dest == 'wan') fwd_ts_to_wan = true;
+				}
+			}
+
+			if (!fwd_ts_to_wan) {
+				let fid = uci.add('firewall', 'forwarding');
+				uci.set('firewall', fid, 'src', 'tailscale');
+				uci.set('firewall', fid, 'dest', 'wan');
+				changed_firewall = true;
+			}
+
+			if (!fwd_wan_to_ts) {
+				let fid = uci.add('firewall', 'forwarding');
+				uci.set('firewall', fid, 'src', 'wan');
+				uci.set('firewall', fid, 'dest', 'tailscale');
 				changed_firewall = true;
 			}
 

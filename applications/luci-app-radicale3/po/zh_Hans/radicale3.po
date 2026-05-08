@@ -1,9 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: luci-app-radicale 3\n"
-"PO-Revision-Date: 2026-02-18 07:11+0000\n"
-"Last-Translator: 大王叫我来巡山 "
-"<hamburger2048@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-04-20 13:24+0000\n"
+"Last-Translator: nKsyn <e.nksyn@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/openwrt/luciapplicationsradicale3/zh_Hans/>\n"
 "Language: zh_Hans\n"
@@ -11,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.16.1-dev\n"
+"X-Generator: Weblate 5.17.1-dev\n"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:288
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:298
@@ -34,9 +33,13 @@ msgstr "ARGON2"
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:90
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:183
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:377
-#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:465
+#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:468
 msgid "Advanced"
 msgstr "高级"
+
+#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:463
+msgid "Alert"
+msgstr "警报"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:117
 msgid "Allowed Ciphers"
@@ -44,7 +47,7 @@ msgstr "允许的加密法"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:148
 msgid "Authentication"
-msgstr "身份认证"
+msgstr "认证"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:185
 msgid "Authentication Type"
@@ -79,11 +82,11 @@ msgstr "存储更改后运行的命令"
 msgid "Confirm Plaintext Password"
 msgstr "确认纯文本密码"
 
-#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:460
+#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:462
 msgid "Critical"
 msgstr "严重"
 
-#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:456
+#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:457
 msgid "Debug"
 msgstr "调试"
 
@@ -106,10 +109,6 @@ msgstr "默认（仅所有者）"
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:386
 msgid "Delete sync tokens that are older (seconds)"
 msgstr "删除较旧的同步令牌（秒）"
-
-#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:467
-msgid "Do not filter debug messages starting with 'TRACE'"
-msgstr "不过滤 'TRACE' 开头的调试信息"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:437
 msgid "Document Encoding"
@@ -139,7 +138,7 @@ msgstr "加密"
 msgid "Encryption method when changing this password"
 msgstr "更改此密码时的加密方法"
 
-#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:459
+#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:461
 msgid "Error"
 msgstr "错误"
 
@@ -177,7 +176,7 @@ msgstr "HTTP(S) 标头"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:433
 msgid "Header: X-Access-Control-Allow-Origin"
-msgstr "标头： X-Access-Control-Allow-Origin"
+msgstr "标头：X-Access-Control-Allow-Origin"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:430
 msgid "Headers"
@@ -201,7 +200,7 @@ msgstr ""
 "如果“纯文本密码”被填写并匹配“确认纯文本密码”，则该字段变为该密码的哈希值，否"
 "则该字段仍为现有哈希值（对上方所列哈希类型，也可以放入自己的哈希值）。"
 
-#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:457
+#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:458
 msgid "Info"
 msgstr "信息"
 
@@ -211,7 +210,7 @@ msgstr "日志级别"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:448
 msgid "Logging"
-msgstr "日志记录"
+msgstr "日志"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:170
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:220
@@ -225,7 +224,7 @@ msgstr "MD5-APR1"
 msgid "Main"
 msgstr "主要"
 
-#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:472
+#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:470
 msgid "Mask Passwords"
 msgstr "隐藏密码"
 
@@ -247,7 +246,7 @@ msgstr "最大并行连接数"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:138
 msgid "Maximum size of request body (bytes)"
-msgstr "请求正文的最大大小（单位： 字节）"
+msgstr "请求正文的最大大小（单位：字节）"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:381
 msgid "Multiple files on filesystem"
@@ -274,6 +273,10 @@ msgstr "无 SSL 支持可用。请安装 python3-openssl。"
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:188
 msgid "No authentication"
 msgstr "无身份认证"
+
+#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:459
+msgid "Notice"
+msgstr "通知"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:68
 msgid "Open Web Interface"
@@ -307,19 +310,19 @@ msgstr "来自 web 服务器的 REMOTE_USER"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:412
 msgid "RO: All, RW: All"
-msgstr "只读： 全部，读写： 全部"
+msgstr "只读：全部，读写：全部"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:410
 msgid "RO: Authenticated Users, RW: Owner"
-msgstr "只读： 已认证身份的用户，读写： 所有者"
+msgstr "只读：已认证身份的用户，读写：所有者"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:409
 msgid "RO: None, RW: Authenticated Users"
-msgstr "只读： 无，读写： 已认证身份的用户"
+msgstr "只读：无，读写：已认证身份的用户"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:408
 msgid "RO: None, RW: Owner"
-msgstr "只读： 无，读写： 所有者"
+msgstr "只读：无，读写：所有者"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:58
 msgid ""
@@ -343,7 +346,7 @@ msgstr "Radicale3 用户"
 msgid "Realm"
 msgstr "域"
 
-#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:472
+#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:470
 msgid "Redact passwords in logs"
 msgstr "在日志中遮盖密码"
 
@@ -399,7 +402,7 @@ msgstr "服务器设置"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:143
 msgid "Socket timeout (seconds)"
-msgstr "套接字超时（单位： 秒）"
+msgstr "套接字超时（单位：秒）"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:368
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:444
@@ -414,9 +417,9 @@ msgstr "存储类型"
 msgid "Timeout"
 msgstr "超时"
 
-#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:467
-msgid "Trace on debug"
-msgstr "Trace on debug"
+#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:456
+msgid "Trace"
+msgstr "追踪"
 
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:339
 msgid "Unable to encrypt plaintext password"
@@ -451,7 +454,7 @@ msgstr "用户名必填"
 msgid "Username must be at least 1 character long"
 msgstr "用户名长度至少 1 个字符"
 
-#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:458
+#: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:460
 msgid "Warning"
 msgstr "警告"
 
@@ -487,3 +490,9 @@ msgstr "htpasswd 格式文件的文件名"
 #: applications/luci-app-radicale3/htdocs/luci-static/resources/view/radicale3.js:179
 msgid "password file can have users with a mix of support encryption methods"
 msgstr "密码文件中的用户可使用不同的受支持的加密方法"
+
+#~ msgid "Do not filter debug messages starting with 'TRACE'"
+#~ msgstr "不过滤 'TRACE' 开头的调试信息"
+
+#~ msgid "Trace on debug"
+#~ msgstr "Trace on debug"

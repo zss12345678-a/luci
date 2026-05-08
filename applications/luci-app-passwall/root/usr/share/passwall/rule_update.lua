@@ -97,7 +97,7 @@ local function curl(url, file)
 	local http_code = 0
 	local header_str = ""
 	local args = {
-		"-skL",
+		"-fskL",
 		"--retry 3",
 		"--connect-timeout 3",
 		"--max-time 300",
@@ -122,7 +122,7 @@ local function curl(url, file)
 	if header_str ~= "" then
 		header_str = header_str:gsub("\r", "")
 	end
-	return http_code, header_str
+	return return_code, http_code, header_str
 end
 
 --check excluded domain
@@ -367,14 +367,14 @@ local function non_file_check(file_path, header_content)
 end
 
 local function GeoToRule(rule_name, rule_type, out_path)
-	if not api.is_finded("geoview") then
-		log(rule_name .. "生成失败，缺少 geoview 组件。")
-		return false;
+	local bin = api.finded_com("geoview")
+	if not (bin and api.compare_versions(api.get_app_version("geoview"), ">=", "0.1.10")) then
+		log("[警告] Geoview 组件缺失或版本过低，规则生成流程已被跳过。")
+		return false
 	end
 	local geosite_path = asset_location .. "geosite.dat"
 	local geoip_path = asset_location .. "geoip.dat"
 	local file_path = (rule_type == "domain") and geosite_path or geoip_path
-	local bin = api.get_app_path("geoview")
 	local geo_arg
 	if rule_type == "domain" then
 		if rule_name == "gfwlist" then
@@ -389,12 +389,18 @@ local function GeoToRule(rule_name, rule_type, out_path)
 	end
 	local cmd = string.format(bin .. " -input '%s' %s -lowmem=true -output '%s'", file_path, geo_arg, out_path)
 	sys.exec(cmd)
-	return true;
+	local local_file_size = tonumber(fs.stat(out_path, "size") or 0)
+	if local_file_size == 0 then
+		os.remove(out_path)
+		log(rule_name .. " 生成失败，请确保 Geo 文件正确且包含目标规则。")
+		return false
+	end
+	return true
 end
 
 --fetch rule
 local function fetch_rule(rule_name, rule_type, url, exclude_domain, max_retries)
-	local sret = 200
+	local sret = 0
 	local max_attempts = max_retries or 2
 	local rule_dataset = {}
 	local file_tmp = "/tmp/" .. rule_name .. "_tmp"
@@ -407,13 +413,13 @@ local function fetch_rule(rule_name, rule_type, url, exclude_domain, max_retries
 	end
 
 	for k, v in ipairs(url) do
-        local current_file = "/tmp/" .. rule_name .. "_dl" .. k
-        local success = false
+		local current_file = "/tmp/" .. rule_name .. "_dl" .. k
+		local success = false
 
-        if v ~= "geo2rule" then
+		if v ~= "geo2rule" then
 			for i = 1, max_attempts do
-				local http_code, header = curl(v, current_file)
-				if http_code == 200 and not non_file_check(current_file, header) then
+				local return_code, http_code, header = curl(v, current_file)
+				if return_code == 0 and not non_file_check(current_file, header) then
 					success = true
 					break
 				end
@@ -434,7 +440,7 @@ local function fetch_rule(rule_name, rule_type, url, exclude_domain, max_retries
 						line = line:gsub("full:", "")
 						if not (is_comment_line(line) or is_ipv4(line) or has_colon(line) or (exclude_domain and check_excluded_domain(line))) then
 							local match = extract_domain(line)
-							if match then
+							if match and not is_ipv4(match) then
 								rule_dataset[match] = true
 							end
 						end
@@ -445,7 +451,7 @@ local function fetch_rule(rule_name, rule_type, url, exclude_domain, max_retries
 							line = line:gsub("full:", "")
 							if not (is_comment_line(line) or is_ipv4(line) or has_colon(line) or (exclude_domain and check_excluded_domain(line))) then
 								local match = extract_domain(line)
-								if match then
+								if match and not is_ipv4(match) then
 									rule_dataset[match] = true
 								end
 							end
@@ -477,13 +483,13 @@ local function fetch_rule(rule_name, rule_type, url, exclude_domain, max_retries
 				f:close()
 			end
 		else
-			sret = 0
+			sret = 1
 			log(string.format("%s 第%d条规则: %s 下载失败！", rule_name, k, v))
 		end
 		os.remove(current_file)
 	end
 
-	if sret == 200 then
+	if sret == 0 then
 		local result_list = {}
 		for line, _ in pairs(rule_dataset) do table.insert(result_list, line) end
 		table.sort(result_list)
@@ -533,7 +539,7 @@ local function fetch_geofile(geo_name, geo_type, url)
 		return sys.call("sha256sum -c " .. sha_file .. " > /dev/null 2>&1") == 0
 	end
 
-	local sha_verify, _ = curl(sha_url, sha_path) == 200
+	local sha_verify = select(1, curl(sha_url, sha_path)) == 0
 	if sha_verify then
 		local f = io.open(sha_path, "r")
 		if f then
@@ -557,17 +563,17 @@ local function fetch_geofile(geo_name, geo_type, url)
 		end
 	end
 
-	local sret_tmp, header = curl(url, tmp_path)
-	if sret_tmp == 200 and non_file_check(tmp_path, header) then
+	local sret_tmp, _, header = curl(url, tmp_path)
+	if sret_tmp == 0 and non_file_check(tmp_path, header) then
 		log(geo_type .. " 下载文件过程出错，尝试重新下载。")
 		os.remove(tmp_path)
-		sret_tmp, header= curl(url, tmp_path)
-		if sret_tmp == 200 and non_file_check(tmp_path, header) then
-			sret_tmp = 0
+		sret_tmp, _, header= curl(url, tmp_path)
+		if sret_tmp == 0 and non_file_check(tmp_path, header) then
+			sret_tmp = 1
 			log(geo_type .. " 下载文件过程出错，请检查网络或下载链接后重试！")
 		end
 	end
-	if sret_tmp == 200 then
+	if sret_tmp == 0 then
 		if sha_verify then
 			if verify_sha256(sha_path) then
 				sys.call(string.format("mkdir -p %s && mv -f %s %s", backup_path, asset_path, backup_path))
@@ -659,9 +665,37 @@ else
 	geoip_update = uci:get(name, "@global_rules[0]", "geoip_update") or "1"
 	geosite_update = uci:get(name, "@global_rules[0]", "geosite_update") or "1"
 end
-if gfwlist_update == "0" and chnroute_update == "0" and chnroute6_update == "0" and chnlist_update == "0" and geoip_update == "0" and geosite_update == "0" then
+if geo2rule ~= "1" and gfwlist_update == "0" and chnroute_update == "0" and chnroute6_update == "0" and chnlist_update == "0" and geoip_update == "0" and geosite_update == "0" then
 	os.exit(0)
 end
+
+local function check_instance(action)
+	local rule_lock = "/var/lock/" .. name .. "_rule_update.lock"
+	local sub_lock = "/var/lock/" .. name .. "_subscribe.lock"
+
+	if action == "start" then
+		math.randomseed(os.time() + math.floor(os.clock() * 1000))
+		api.nixio.nanosleep(0, math.random(100, 1000) * 1000000)
+		if fs.access(rule_lock) then
+			log("有[规则更新]实例正在运行，请稍后再试...\n")
+			os.exit(0)
+		else
+			luci.sys.call("touch " .. rule_lock)
+		end
+	elseif action == "end" then
+		luci.sys.call("rm -f " .. rule_lock)
+		return
+	end
+
+	if fs.access(sub_lock) then
+		log("[订阅]实例正在运行，[规则更新]进入队列等待...\n")
+	end
+	while fs.access(sub_lock) do
+		api.nixio.nanosleep(2, 0)
+	end
+end
+
+check_instance("start")
 
 log("开始更新规则...")
 local function safe_call(func, err_msg)
@@ -691,28 +725,25 @@ if geo2rule == "1" then
 	end
 
 	-- 如果是手动更新(arg2存在)始终生成规则
-	local force_generate = (arg2 ~= nil)
+	if arg2 then geoip_update_ok, geosite_update_ok = true, true end
+	chnroute_update, chnroute6_update, gfwlist_update, chnlist_update = "1", "1", "1", "1"
 
-	if (geoip_update_ok or force_generate) and fs.access(asset_location .. "geoip.dat") then
-			if force_generate or chnroute_update == "1" then
-				safe_call(fetch_chnroute, "生成chnroute发生错误...")
-			end
-			if force_generate or chnroute6_update == "1" then
-				safe_call(fetch_chnroute6, "生成chnroute6发生错误...")
-			end
-	else
-		log("geoip.dat 文件不存在,跳过规则生成。")
+	if geoip_update_ok then
+		if fs.access(asset_location .. "geoip.dat") then
+			safe_call(fetch_chnroute, "生成chnroute发生错误...")
+			safe_call(fetch_chnroute6, "生成chnroute6发生错误...")
+		else
+			log("geoip.dat 文件不存在,跳过规则生成。")
+		end
 	end
 
-	if (geosite_update_ok or force_generate) and fs.access(asset_location .. "geosite.dat") then
-			if force_generate or gfwlist_update == "1" then
-				safe_call(fetch_gfwlist, "生成gfwlist发生错误...")
-			end
-			if force_generate or chnlist_update == "1" then
-				safe_call(fetch_chnlist, "生成chnlist发生错误...")
-			end
-	else
-		log("geosite.dat 文件不存在,跳过规则生成。")
+	if geosite_update_ok then
+		if fs.access(asset_location .. "geosite.dat") then
+			safe_call(fetch_gfwlist, "生成gfwlist发生错误...")
+			safe_call(fetch_chnlist, "生成chnlist发生错误...")
+		else
+			log("geosite.dat 文件不存在,跳过规则生成。")
+		end
 	end
 else
 	if gfwlist_update == "1" then
@@ -766,3 +797,5 @@ if reboot == 1 then
 	api.uci_save(uci, name, true, true)
 end
 log("规则更新完毕...\n")
+
+check_instance("end")
