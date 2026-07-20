@@ -115,7 +115,7 @@ function render_modal_status(node, ifc) {
 
 	dom.content(node, [
 		E('img', {
-			'src': L.resource('icons/%s%s.svg').format(dev ? dev.getType() : 'ethernet', ifc.isUp() ? '' : '_disabled'),
+			'src': L.resource('icons/%s%s.svg').format(dev ? dev.getType() : 'ethernet', ifc && ifc.isUp() ? '' : '_disabled'),
 			'title': dev ? dev.getTypeI18n() : _('Not present')
 		}),
 		ifc ? render_status(E('span'), ifc, true) : E('em', _('Interface not present or not connected yet.'))
@@ -359,6 +359,7 @@ return view.extend({
 			network.getDSLModemType(),
 			network.getDevices(),
 			fs.lines('/etc/iproute2/rt_tables'),
+			L.resolveDefault(callNetworkDeviceStatus(), {}),
 			uci.changes()
 		]);
 	},
@@ -457,7 +458,7 @@ return view.extend({
 		]);
 	},
 
-	render([dslModemType, netDevs, rtTables]) {
+	render([dslModemType, netDevs, rtTables, devStatus]) {
 
 		if (this.interfaceBridgeWithIfnameSections().length)
 			return this.renderBridgeMigration();
@@ -747,7 +748,7 @@ return view.extend({
 							so = ss.taboption('ipv4', form.RichListValue, 'dhcpv4', _('DHCPv4 Service'),
 									  _('Enable or disable DHCPv4 services on this interface.'));
 							so.optional = true;
-							so.value('disabled', _('disabled'),
+							so.value('', _('disabled'),
 								 _('Do not provide DHCPv4 services on this interface.'));
 							so.value('server', _('enabled'),
 								 _('Provide DHCPv4 services on this interface.'));
@@ -1221,11 +1222,12 @@ return view.extend({
 					o = nettools.replaceOption(s, 'advanced', form.RichListValue, 'multipath', _('Multi-Path TCP'),
 						_('Multi-Path TCP') + ' %s'.format('<a href="%s" target="_blank">RFC8684</a>').format('https://www.rfc-editor.org/rfc/rfc8684.html') + '<br/>' +
 						_('For packets originating from this device, e.g. VPN.') );
-					o.value('off', _('Off'), _('Disables this interface for MPTCP'));
+					o.value('', _('Off'), _('Disables this interface for MPTCP'));
 					o.value('on', _('On'), _('No special configuration'));
 					o.value('master', _('Master'), _('Sets default route for all traffic'));
 					o.value('backup', _('Backup'), _('Hot standby; use this interface; do not forward traffic until no other interface is available (faster)'));
 					o.value('handover', _('Handover'), _('Cold standby; Establish a connection only when no other interface is available (slower)'));
+					o.optional = true;
 				}
 
 				o = nettools.replaceOption(s, 'advanced', form.Value, 'ip4table', _('Override IPv4 routing table'));
@@ -1738,6 +1740,41 @@ return view.extend({
 		o.textvalue = getDevTypeDesc;
 		o.modalonly = false;
 
+		o = s.option(form.DummyValue, '_speed', _('Link Speed'));
+		o.modalonly = false;
+		o.textvalue = function(section_id) {
+			const dev = getDevice(section_id);
+
+			if (!dev || !dev.getCarrier())
+				return '-';
+
+			const cur = dev.getSpeed();
+
+			/* getSpeed() returns Mbit/s, -1 with carrier but no negotiated rate, or null if unsupported */
+			if (!(cur > 0))
+				return '-';
+
+			/* %1000mBit/s would render 1 Gbit as "1000.00 MBit/s" (strict scale step + forced decimals), so format directly */
+			const fmt = (mbit) => (mbit >= 1000) ? (mbit / 1000) + ' Gbit/s' : mbit + ' Mbit/s';
+
+			/* distinct ethtool-supported link speeds, e.g. 1000baseT-F => 1000, sorted ascending */
+			const st = devStatus ? devStatus[dev.getName()] : null;
+			const supported = (st ? L.toArray(st['link-supported']) : []).reduce(function(speeds, mode) {
+				const n = mode.match(/^(\d+)base/);
+				if (n && speeds.indexOf(+n[1]) < 0)
+					speeds.push(+n[1]);
+				return speeds;
+			}, []).sort((a, b) => a - b);
+
+			/* current speed in the cell; all supported speeds in the tooltip when known */
+			if (supported.length)
+				return E('span', {
+					'data-tooltip': _('Supported link speeds: %s').format(supported.map(fmt).join(', '))
+				}, [ fmt(cur) ]);
+
+			return fmt(cur);
+		};
+
 		o = s.option(form.DummyValue, 'macaddr', _('MAC Address'));
 		o.modalonly = false;
 		o.textvalue = function(section_id) {
@@ -1800,8 +1837,6 @@ return view.extend({
 		o.default = '1';
 		o.optional = true;
 
-		const steer_flow = uci.get('network', 'globals', 'steering_flows');	
-
 		o = s.option(form.Value, 'steering_flows', _('Steering flows (<abbr title="Receive Packet Steering">RPS</abbr>)'),
 			_('Directs packet flows to specific CPUs where the local socket owner listens (the local service).') + ' ' +
 			_('Note: this setting is for local services on the device only (not for forwarding).'));
@@ -1811,7 +1846,6 @@ return view.extend({
 		o.depends('packet_steering', '1');
 		o.depends('packet_steering', '2');
 		o.datatype = 'uinteger';
-		o.default = steer_flow;
 
 		if (dslModemType != null) {
 			s = m.section(form.TypedSection, 'dsl', _('DSL'));

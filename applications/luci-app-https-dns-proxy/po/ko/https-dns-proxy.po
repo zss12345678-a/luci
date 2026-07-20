@@ -1,14 +1,14 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-04-20 17:56+0000\n"
-"Last-Translator: Hyeonjeong Lee <h9101654@gmail.com>\n"
+"PO-Revision-Date: 2026-05-25 04:35+0000\n"
+"Last-Translator: Hoseok Seo <ddinghoya@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/openwrt/"
 "luciapplicationshttps-dns-proxy/ko/>\n"
 "Language: ko\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.17.1-dev\n"
+"X-Generator: Weblate 2026.6.dev0\n"
 
 #: applications/luci-app-https-dns-proxy/htdocs/luci-static/resources/https-dns-proxy/status.js:275
 msgid "%s%s%s proxy at %s on port %s.%s"
@@ -57,7 +57,6 @@ msgid "AdGuard"
 msgstr "AdGuard"
 
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/recipes.v.json:22
-#, fuzzy
 msgid "Adblock"
 msgstr "광고 차단"
 
@@ -858,7 +857,6 @@ msgid "ns4: Norway - Sandefjord"
 msgstr "ns4: 노르웨이 - 사네피오르"
 
 #: applications/luci-app-https-dns-proxy/root/usr/share/https-dns-proxy/providers/recipes.v.json:2
-#, fuzzy
 msgid "v.recipes"
 msgstr "v.recipes"
 
