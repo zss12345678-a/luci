@@ -156,6 +156,12 @@ o:value("UseIPv6v4", translate("Prefer IPv6"))
 o:value("UseIPv4", translate("IPv4 Only"))
 o:value("UseIPv6", translate("IPv6 Only"))
 
+o = s:option(Flag, "allowInsecure", translate("allowInsecure"))
+o.default = "0"
+o.rmempty = false
+o.description = translate("Whether unsafe connections are allowed. When checked, Certificate validation will be skipped.") .. "<br>" ..
+		translate("Used when the node link does not include this parameter.")
+
 o = s:option(ListValue, "filter_keyword_mode", translate("Filter keyword Mode"))
 o.default = "5"
 o:value("0", translate("Close"))
@@ -221,11 +227,9 @@ if #hysteria2_type > 0 then
 
 	o = s:option(Value, "hysteria_up_mbps", "Hy/Hy2 " .. translate("Max upload Mbps"))
 	o.datatype = "uinteger"
-	o.default = "100"
 
 	o = s:option(Value, "hysteria_down_mbps", "Hy/Hy2 " .. translate("Max download Mbps"))
 	o.datatype = "uinteger"
-	o.default = "100"
 end
 
 o = s:option(Flag, "boot_update", translate("Update Once on Boot"), translate("Updates the subscription the first time PassWall runs automatically after each system boot."))

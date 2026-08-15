@@ -115,12 +115,12 @@ if load_urltest_options then -- [[ URLTest Start ]]
 		end
 	end
 	-- 读取旧 DynamicList
-	function o.cfgvalue(self, section)
-		return m.uci:get_list(appname, section, "urltest_node") or {}
+	function o.custom_cfgvalue(self, section)
+		return table.concat(m:get(section, "urltest_node") or {}, " ")
 	end
 	-- 写入保持 DynamicList
 	function o.custom_write(self, section, value)
-		local old = m.uci:get_list(appname, section, "urltest_node") or {}
+		local old = m:get(section, "urltest_node") or {}
 		local new, set = {}, {}
 		for v in value:gmatch("%S+") do
 			new[#new + 1] = v
@@ -128,13 +128,13 @@ if load_urltest_options then -- [[ URLTest Start ]]
 		end
 		for _, v in ipairs(old) do
 			if not set[v] then
-				m.uci:set_list(appname, section, "urltest_node", new)
+				m:set(section, "urltest_node", new)
 				return
 			end
 			set[v] = nil
 		end
 		for _ in pairs(set) do
-			m.uci:set_list(appname, section, "urltest_node", new)
+			m:set(section, "urltest_node", new)
 			return
 		end
 	end
@@ -536,6 +536,9 @@ o.validate = function(self, value)
 	return value
 end
 
+o = s:option(Value, _n("cipherSuites"), translate("Cipher Suites"), '<a href="https://go.dev/src/crypto/tls/cipher_suites.go#L44" target="_blank">***</a>' .. " " .. translate("Configures the list of supported cipher suites, separated by :"))
+o:depends({ [_n("tls")] = true })
+
 o = s:option(Flag, _n("ech"), translate("ECH"))
 o.default = "0"
 o:depends({ [_n("tls")] = true, [_n("flow")] = "", [_n("reality")] = false })
@@ -591,10 +594,6 @@ if singbox_tags:find("with_utls") then
 	o = s:option(Value, _n("reality_shortId"), translate("Short Id"))
 	o:depends({ [_n("reality")] = true })
 end
-
-o = s:option(Flag, _n("anytls_disable_reuse"), translate("Disable TLS Reuse"))
-o.default = 0
-o:depends({ [_n("protocol")] = "anytls" })
 
 o = s:option(ListValue, _n("transport"), translate("Transport"))
 o:value("tcp", "TCP")

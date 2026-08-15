@@ -7,7 +7,8 @@ m = Map(appname)
 m.redirect = api.url("acl")
 api.set_apply_on_parse(m)
 
-if not arg[1] or not m:get(arg[1]) then
+local cfgid = arg[1]
+if not cfgid or not m:get(cfgid) then
 	luci.http.redirect(m.redirect)
 end
 
@@ -48,28 +49,8 @@ m.uci:foreach(appname, "socks", function(s)
 	end
 end)
 
-local dynamicList_write = function(self, section, value)
-	local t = {}
-	local t2 = {}
-	if type(value) == "table" then
-		local x
-		for _, x in ipairs(value) do
-			if x and #x > 0 then
-				if not t2[x] then
-					t2[x] = x
-					t[#t+1] = x
-				end
-			end
-		end
-	else
-		t = { value }
-	end
-	t = table.concat(t, " ")
-	return DynamicList.write(self, section, t)
-end
-
 -- [[ ACLs Settings ]]--
-s = m:section(NamedSection, arg[1], translate("ACLs"), translate("ACLs"))
+s = m:section(NamedSection, cfgid, translate("ACLs"), translate("ACLs"))
 s.addremove = false
 s.dynamic = false
 
@@ -80,7 +61,7 @@ o.rmempty = false
 
 ---- Remarks
 o = s:option(Value, "remarks", translate("Remarks"))
-o.default = arg[1]
+o.default = cfgid
 o.rmempty = false
 
 o = s:option(Value, "interface", translate("Source Interface"))
@@ -180,7 +161,10 @@ sources.validate = function(self, value, t)
 
 	return value
 end
-sources.write = dynamicList_write
+
+o = s:option(ListValue, "mode", translate("Mode"))
+o:value("0", translate("No Proxy"))
+o:value("1", translate("Proxy"))
 
 ---- TCP No Redir Ports
 local TCP_NO_REDIR_PORTS = m:get("@global_forwarding[0]", "tcp_no_redir_ports")
@@ -188,6 +172,7 @@ o = s:option(Value, "tcp_no_redir_ports", translate("TCP No Redir Ports"))
 o:value("", translate("Use global config") .. "(" .. TCP_NO_REDIR_PORTS .. ")")
 o:value("disable", translate("No patterns are used"))
 o:value("1:65535", translate("All"))
+o:depends("mode", "1")
 o.validate = port_validate
 
 ---- UDP No Redir Ports
@@ -199,11 +184,13 @@ o = s:option(Value, "udp_no_redir_ports", translate("UDP No Redir Ports"),
 o:value("", translate("Use global config") .. "(" .. UDP_NO_REDIR_PORTS .. ")")
 o:value("disable", translate("No patterns are used"))
 o:value("1:65535", translate("All"))
+o:depends("mode", "1")
 o.validate = port_validate
 
 o = s:option(DummyValue, "_hide_node_option", "")
 o.template = "passwall/cbi/hidevalue"
 o.value = "1"
+o:depends("mode", "0")
 o:depends({ tcp_no_redir_ports = "1:65535", udp_no_redir_ports = "1:65535" })
 if TCP_NO_REDIR_PORTS == "1:65535" and UDP_NO_REDIR_PORTS == "1:65535" then
 	o:depends({ tcp_no_redir_ports = "", udp_no_redir_ports = "" })
@@ -238,8 +225,10 @@ o.template = appname .. "/cbi/nodes_listvalue"
 o.group = {"",""}
 o.remove = function(self, section)
 	local v = s.fields["shunt_udp_node"]:formvalue(section)
-	if not v then
+	if not v or v == "close" then
 		return m:del(section, self.option)
+	else
+		return m:set(section, self.option, "tcp")
 	end
 end
 
@@ -263,6 +252,20 @@ o.template = "passwall/cbi/hidevalue"
 o.value = "1"
 o:depends({ udp_node = "",  ['!reverse'] = true })
 o:depends({ shunt_udp_node = "tcp" })
+
+---- Log
+o = s:option(Flag, "log", translate("Enable Node Log"))
+o.default = 0
+o.rmempty = false
+o:depends({ _hide_node_option = false, use_global_config = false })
+
+o = s:option(ListValue, "loglevel", "Sing-Box/Xray " .. translate("Log Level"))
+o.default = "warn"
+o:value("debug", "Debug")
+o:value("info", "Info")
+o:value("warn", "Warning")
+o:value("error", "Error")
+o:depends("log", "1")
 
 ---- TCP Proxy Drop Ports
 local TCP_PROXY_DROP_PORTS = m:get("@global_forwarding[0]", "tcp_proxy_drop_ports")
@@ -372,9 +375,6 @@ o.default = "chinadns-ng"
 o:value("dnsmasq", "Dnsmasq")
 o:value("chinadns-ng", translate("ChinaDNS-NG (recommended)"))
 o:depends({ _tcp_node_bool = "1" })
-
-o = s:option(DummyValue, "view_chinadns_log", " ")
-o.template = appname .. "/acl/view_chinadns_log"
 
 o = s:option(Flag, "filter_proxy_ipv6", translate("Filter Proxy Host IPv6"), translate("Experimental feature."))
 o.default = "0"
@@ -602,5 +602,10 @@ for k, v in pairs(nodes_table) do
 		udp.group[#udp.group+1] = (v.group and v.group ~= "") and v.group or translate("default")
 	end
 end
+
+local footer = Template(appname .. "/acl/config_footer")
+footer.api = api
+footer.cfgid = cfgid
+m:append(footer)
 
 return api.return_map(m)
