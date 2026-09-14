@@ -38,7 +38,7 @@ function index()
 	entry({"admin", "services", appname, "settings"}, cbi(appname .. "/client/global"), _("Basic Settings"), 1).dependent = true
 	entry({"admin", "services", appname, "node_list"}, cbi(appname .. "/client/node_list"), _("Node List"), 2).dependent = true
 	entry({"admin", "services", appname, "node_subscribe"}, cbi(appname .. "/client/node_subscribe"), _("Node Subscribe"), 3).dependent = true
-	entry({"admin", "services", appname, "other"}, cbi(appname .. "/client/other", {autoapply = true}), _("Other Settings"), 92).leaf = true
+	entry({"admin", "services", appname, "other"}, cbi(appname .. "/client/other"), _("Other Settings"), 92).leaf = true
 	if api.is_finded("haproxy") then
 		entry({"admin", "services", appname, "haproxy"}, cbi(appname .. "/client/haproxy"), _("Load Balancing"), 93).leaf = true
 	end
@@ -138,18 +138,6 @@ end
 local function http_write_json_error(data)
 	http.prepare_content("application/json")
 	http.write(jsonStringify({code = 0, data = data}))
-end
-
-function reset_config()
-	uci:revert(c_config)
-	luci.sys.call("echo '' > /tmp/log/passwall.log")
-	luci.sys.call('/etc/init.d/passwall stop')
-	if luci.sys.call('[ -s "/usr/share/passwall/0_default_config" ]') == 0 then
-		luci.sys.call('cp -f /usr/share/passwall/0_default_config /etc/config/passwall')
-		api.log(" * 恢复默认配置成功。")
-	else
-		api.log(" * 找不到默认配置文件，重置失败！")
-	end
 end
 
 function show_menu()
@@ -752,6 +740,8 @@ function rollback_rules()
 	if geo2rule == "1" and rules ~= "" then
 		luci.sys.call("lua /usr/share/passwall/rule_update.lua log '" .. rules .. "' rollback > /dev/null")
 	end
+	uci_set("@global[0]", "flush_set", "1")
+	uci_save(true)
 	http_write_json_ok()
 end
 
@@ -855,15 +845,20 @@ local backup_files = {
     "/usr/share/passwall/rules/direct_host",
     "/usr/share/passwall/rules/direct_ip",
     "/usr/share/passwall/rules/proxy_host",
-    "/usr/share/passwall/rules/proxy_ip"
+    "/usr/share/passwall/rules/proxy_ip",
+    "/usr/share/passwall/rules/domains_excluded"
 }
 
 function create_backup()
 	local date = os.date("%y%m%d%H%M")
 	local tar_file = "/tmp/passwall-" .. date .. "-backup.tar.gz"
+	local version_file = "/tmp/passwall-version"
+	local version = api.get_version()
 	fs.remove(tar_file)
-	local cmd = "tar -czf " .. tar_file .. " " .. table.concat(backup_files, " ")
+	fs.writefile(version_file, version .. "\n")
+	local cmd = "tar -czf " .. tar_file .. " " .. table.concat(backup_files, " ") .. " " .. "-C /tmp passwall-version"
 	luci.sys.call(cmd)
+	fs.remove(version_file)
 	http.header("Content-Disposition", "attachment; filename=passwall-" .. date .. "-backup.tar.gz")
 	http.header("X-Backup-Filename", "passwall-" .. date .. "-backup.tar.gz")
 	http.prepare_content("application/octet-stream")
@@ -872,6 +867,7 @@ function create_backup()
 end
 
 function restore_backup()
+	local type = http.formvalue("type")
 	local result = { status = "error", message = "unknown error" }
 	local ok, err = pcall(function()
 		local filename = http.formvalue("filename")
@@ -901,24 +897,38 @@ function restore_backup()
 		fp:close()
 		if chunk_index + 1 == total_chunks then
 			uci:revert(c_config)
+			uci:revert(api.s_config)
 			luci.sys.call("echo '' > /tmp/log/passwall.log")
-			api.log(" * PassWall 配置文件上传成功…")
+			api.log(" * PassWall 备份文件上传成功…")
+			local version_file = "passwall-version"
+			local version = luci.sys.exec("tar -xOf " .. file_path .. " " .. version_file .. " 2>/dev/null"):match("^%s*(.-)%s*$")
+			if version and version ~= "" then
+				api.log(" * 备份文件由 PassWall " .. version .. " 生成。")
+			end
 			local temp_dir = '/tmp/passwall_bak'
 			luci.sys.call("mkdir -p " .. temp_dir)
 			if luci.sys.call("tar -xzf " .. file_path .. " -C " .. temp_dir) == 0 then
 				for _, backup_file in ipairs(backup_files) do
-					local temp_file = temp_dir .. backup_file
-					if fs.access(temp_file) then
-						luci.sys.call("cp -f " .. temp_file .. " " .. backup_file)
+					local is_server_config = backup_file == "/etc/config/passwall_server"
+					if type == "all" or (type == "client" and not is_server_config) or (type == "server" and is_server_config) then
+						local temp_file = temp_dir .. backup_file
+						if fs.access(temp_file) then
+							luci.sys.call("cp -f " .. temp_file .. " " .. backup_file)
+						end
 					end
 				end
-				api.log(" * PassWall 配置还原成功…")
-				api.log(" * 重启 PassWall 服务中…\n")
-				luci.sys.call('/etc/init.d/passwall restart > /dev/null 2>&1 &')
-				luci.sys.call('/etc/init.d/passwall_server restart > /dev/null 2>&1 &')
+				if type == "all" or type == "client" then
+					api.log(" * PassWall 备份还原成功…")
+					api.log(" * 重启 PassWall 服务中…\n")
+					api.sh_uci_set(c_config, "@global[0]", "flush_set", "1", true)
+					luci.sys.call('/etc/init.d/passwall restart > /dev/null 2>&1 &')
+				end
+				if type == "all" or type == "server" then
+					luci.sys.call('/etc/init.d/passwall_server restart > /dev/null 2>&1 &')
+				end
 				result = { status = "success", message = "Upload completed", path = file_path }
 			else
-				api.log(" * PassWall 配置文件解压失败，请重试！")
+				api.log(" * PassWall 备份文件解压失败，请重试！")
 				result = { status = "error", message = "Decompression failed" }
 			end
 			luci.sys.call("rm -rf " .. temp_dir)
@@ -933,6 +943,26 @@ function restore_backup()
 	http_write_json(result)
 end
 
+function reset_config()
+	local type = http.formvalue("type")
+	if type == "client" then
+		uci:revert(c_config)
+		luci.sys.call("echo '' > /tmp/log/passwall.log")
+		luci.sys.call('/etc/init.d/passwall stop')
+		if luci.sys.call('[ -s "/usr/share/passwall/0_default_config" ]') == 0 then
+			luci.sys.call('cp -f /usr/share/passwall/0_default_config /etc/config/passwall')
+			api.log(" * 恢复默认配置成功。")
+		else
+			api.log(" * 找不到默认配置文件，重置失败！")
+		end
+	elseif type == "server" then
+		uci:revert(api.s_config)
+		luci.sys.call("echo '' > /tmp/log/passwall_server.log")
+		luci.sys.call('/etc/init.d/passwall_server stop')
+		luci.sys.call("echo \"config global 'global'\" > /etc/config/passwall_server")
+	end
+end
+
 function geo_view()
 	local action = http.formvalue("action")
 	local value = http.formvalue("value")
@@ -942,7 +972,7 @@ function geo_view()
 		return
 	end
 	local function get_rules(str, type)
-		local rules_id = {}
+		local rules = {}
 		uci_foreach("shunt_rules", function(s)
 			local list
 			if type == "geoip" then list = s.ip_list else list = s.domain_list end
@@ -951,14 +981,18 @@ function geo_view()
 					local prefix, main = line:match("^(.-):(.*)")
 					if not main then main = line end
 					if type == "geoip" and (api.datatypes.ipaddr(str) or api.datatypes.ip6addr(str)) then
-						if main:find(str, 1, true) then rules_id[#rules_id + 1] = s[".name"] end
+						if main:find(str, 1, true) then
+							table.insert(rules, {id = s[".name"], group = s.group or i18n.translate("default")})
+						end
 					else
-						if main == str then rules_id[#rules_id + 1] = s[".name"] end
+						if main == str then
+							table.insert(rules, {id = s[".name"], group = s.group or i18n.translate("default")})
+						end
 					end
 				end
 			end
 		end)
-		return rules_id
+		return rules
 	end
 	local geo_dir = (uci_get("@global_rules[0]", "v2ray_location_asset") or "/usr/share/v2ray/"):match("^(.*)/")
 	local geosite_path = geo_dir .. "/geosite.dat"
@@ -979,11 +1013,17 @@ function geo_view()
 			for line in geo_string:gmatch("([^\n]+)") do
 				lines[#lines + 1] = geo_type .. ":" .. line
 				for _, r in ipairs(get_rules(line, geo_type) or {}) do
-					if not seen[r] then seen[r] = true; rules[#rules + 1] = r end
+					if not seen[r.id] then
+						seen[r.id] = true
+						rules[#rules + 1] = string.format("[%s]%s", r.group, r.id)
+					end
 				end
 			end
 			for _, r in ipairs(get_rules(value, geo_type) or {}) do
-				if not seen[r] then seen[r] = true; rules[#rules + 1] = r end
+				if not seen[r.id] then
+					seen[r.id] = true
+					rules[#rules + 1] = string.format("[%s]%s", r.group, r.id)
+				end
 			end
 			geo_string = table.concat(lines, "\n")
 			if #rules > 0 then

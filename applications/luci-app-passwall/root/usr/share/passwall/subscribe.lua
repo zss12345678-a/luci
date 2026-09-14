@@ -1467,6 +1467,10 @@ local function processData(szType, content, add_mode, group, sub_cfg)
 		result.hysteria2_up_mbps = params.upmbps or (sub_cfg and sub_hy_up_mbps or nil)
 		result.hysteria2_down_mbps = params.downmbps or (sub_cfg and sub_hy_down_mbps or nil)
 		result.hysteria2_hop = params.mport
+		if params.ech and params.ech ~= "" then
+			result.ech = "1"
+			result.ech_config = params.ech
+		end
 		if params["obfs-password"] or params["obfs_password"] then
 			result.hysteria2_obfs_type = params.obfs or "salamander"
 			result.hysteria2_obfs_password = params["obfs-password"] or params["obfs_password"]
@@ -1704,6 +1708,7 @@ local function curl(url, file, ua, mode)
 		"-fskL",
 		"--retry 3",
 		"--connect-timeout 3",
+		"-H 'Accept: */*'",
 		"-H 'Accept-Encoding: identity'",
 		"--dump-header -",
 		"-w '\\n%{http_code}'"

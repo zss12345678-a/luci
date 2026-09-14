@@ -13,7 +13,7 @@ jsonc = require "luci.jsonc"
 i18n = require "luci.i18n"
 
 appname = "passwall"
-curl_args = { "-skfL", "--connect-timeout 3", "--retry 3" }
+curl_args = { "-skfL", "--connect-timeout 3", "--retry 3", "-H 'Accept: */*'" }
 command_timeout = 300
 OPENWRT_ARCH = nil
 DISTRIB_ARCH = nil
@@ -1378,11 +1378,22 @@ function to_move(app_name,file)
 end
 
 function get_version()
-	local version = sys.exec("opkg list-installed luci-app-passwall 2>/dev/null | awk '{print $3}'")
-	if not version or #version == 0 then
-		version = sys.exec("apk list luci-app-passwall 2>/dev/null | awk '/installed/ {print $1}' | cut -d'-' -f4-")
+	local version
+	local version_file = CACHE_PATH .. "/passwall_version"
+	sys.call("mkdir -p " .. CACHE_PATH)
+	if fs.access(version_file) then
+		version = fs.readfile(version_file)
+	else
+		version = sys.exec("opkg list-installed luci-app-passwall 2>/dev/null | awk '{print $3}'")
+		if not version or version == "" then
+			version = sys.exec("apk list luci-app-passwall 2>/dev/null | awk '/installed/ {print $1}' | cut -d'-' -f4-")
+		end
+		version = (version or ""):match("^%s*(.-)%s*$")
+		if version ~= "" then
+			fs.writefile(version_file, version)
+		end
 	end
-	return (version or ""):gsub("\n", ""):match("^([^-]+)")
+	return version:match("^([^-]+)") or ""
 end
 
 function to_check_self()
@@ -1439,17 +1450,9 @@ function set_default_cbi()
 			if not config then config = c_config end
 			default_init(self, config, ...)
 			self.api = require "luci.passwall.api"
-		end
-		if is_js_luci() == true then
-			local default_parse = Map.parse
-			function Map.parse(self, ...)
-				apply_redirect(self)
-				local old = self.on_after_save
-				self.on_after_save = function(self)
-					if old then old(self) end
-					self:set("@global[0]", "timestamp", os.time())
-				end
-				return default_parse(self, ...)
+			if is_js_luci() == true then
+				self.apply_on_parse = false
+				self.is_js_luci = true
 			end
 		end
 		function Map.foreach(self, stype, func)
@@ -1719,38 +1722,6 @@ function format_go_time(input, default)
 	if m > 0 then result = result .. m .. "m" end
 	if s > 0 or result == "" then result = result .. s .. "s" end
 	return result
-end
-
-function apply_redirect(m)
-	local tmp_uci_file = "/etc/config/" .. c_config .. "_redirect"
-	if m.redirect and m.redirect ~= "" then
-		if fs.access(tmp_uci_file) then
-			local redirect
-			for line in io.lines(tmp_uci_file) do
-				redirect = line:match("option%s+url%s+['\"]([^'\"]+)['\"]")
-				if redirect and redirect ~= "" then break end
-			end
-			if redirect and redirect ~= "" then
-				sys.call("/bin/rm -f " .. tmp_uci_file)
-				luci.http.redirect(redirect)
-			end
-		else
-			fs.writefile(tmp_uci_file, "config redirect\n")
-		end
-		local old = m.on_after_save
-		m.on_after_save = function(self)
-			if old then
-				old(self)
-			end
-			local redirect = self.redirect
-			if redirect and redirect ~= "" then
-				uci:set(c_config .. "_redirect", "@redirect[0]", "url", redirect)
-			end
-		end
-	else
-		uci:revert(c_config .. "_redirect")
-		sys.call("/bin/rm -f " .. tmp_uci_file)
-	end
 end
 
 function match_node_rule(name, rule)
